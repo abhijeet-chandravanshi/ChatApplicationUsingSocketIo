@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+</head>
+<body>
+    <h1 style="color:blueviolet">Chat Application using Socket.IO and Node.JS</h1>
+    <hr />
+    <h2 style="color:lightcoral">Message Sender</h2>
+    <input type = "text" id = "messageInput">
+    <button onclick = "sendMessage()">Send Message</button>
+
+    <h2 style="color:lightcoral">Message receiver </h2>
+    <hr />
+    <ul id = "messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+       const socket = io();
+
+       function sendMessage(){
+        const message = document.getElementById('messageInput').value;
+        socket.emit('message', message);
+        document.getElementById('messageInput').value = '';
+        
+       }
+       // sending a message
+       socket.on('message',(data) => {
+        const messages = document.getElementById('messages');
+        const li  = document.createElement('li');
+        li.textContent = data;
+        messages.appendChild(li);
+       })
+    </script>
+    
+</body>
+</html>
